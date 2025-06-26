@@ -4,7 +4,7 @@ from gtts import gTTS
 import re
 import streamlit as st
 
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+genai.configure(api_key=st.secrets["AIzaSyDaMv5ixTtfaS8HCHPa87GeKk5B798WCAI"])
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 def generate_roast(name, bio):
