@@ -3,7 +3,6 @@ from gtts import gTTS
 import re
 import streamlit as st
 
-# Load API key from Streamlit secrets
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 model = genai.GenerativeModel("gemini-1.5-flash")
 
