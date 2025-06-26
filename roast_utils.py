@@ -1,10 +1,10 @@
 # roast_utils.py
 import google.generativeai as genai
-import pyttsx3
+from gtts import gTTS
 import re
+import streamlit as st
 
-# Configure your Gemini API key
-genai.configure(api_key="AIzaSyDaMv5ixTtfaS8HCHPa87GeKk5B798WCAI")
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 def generate_roast(name, bio):
@@ -20,20 +20,7 @@ def generate_roast(name, bio):
     return response.text.strip()
 
 def roast_to_speech(text, audio_path):
-    # Remove any side text like (..), [..], {..}
     cleaned_text = re.sub(r"[\(\[\{].*?[\)\]\}]", "", text)
+    tts = gTTS(text=cleaned_text.strip(), lang='en', slow=False)
+    tts.save(audio_path)
 
-    engine = pyttsx3.init()
-
-    # Use a fun, chill-sounding voice if available
-    voices = engine.getProperty('voices')
-    for voice in voices:
-        if 'zira' in voice.name.lower():
-            engine.setProperty('voice', voice.id)
-            break
-
-    engine.setProperty('rate', 165)
-    engine.setProperty('volume', 1.0)
-
-    engine.save_to_file(cleaned_text.strip(), audio_path)
-    engine.runAndWait()
