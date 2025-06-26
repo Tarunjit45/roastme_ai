@@ -1,9 +1,9 @@
-# roast_utils.py
 import google.generativeai as genai
 from gtts import gTTS
 import re
 import streamlit as st
 
+# Load API key from Streamlit secrets
 genai.configure(api_key=st.secrets["AIzaSyDaMv5ixTtfaS8HCHPa87GeKk5B798WCAI"])
 model = genai.GenerativeModel("gemini-1.5-flash")
 
@@ -23,4 +23,3 @@ def roast_to_speech(text, audio_path):
     cleaned_text = re.sub(r"[\(\[\{].*?[\)\]\}]", "", text)
     tts = gTTS(text=cleaned_text.strip(), lang='en', slow=False)
     tts.save(audio_path)
-
